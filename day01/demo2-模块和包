@@ -1,0 +1,68 @@
+模块是node.js应用程序的基本组成部分，文件和模块是一一对应的。包和模块没有本质区别，在此不做区分。
+
+定义一个模块： //创建一个module.js文件
+var name;
+exports.setName = function(theName){     //通过exports对象把setName作为模块的访问接口
+      name = theName;
+}
+exports.sayHello = function(){       //通过exports对象把sayHello作为模块的访问接口
+      console.log("hello" + name)    
+}
+
+引用该模块，并运行应用。  //创建一个test-module.js文件
+var myModule = require("./module");    //此处不可写为var myModule = require("module"); 
+myModule.setName("zhuyujie");
+myModule.sayHello();
+
+
+require是单次加载模块。也即是说，无论调用多少次require，获得的模块都是同一个。
+实例1：
+var myModule1 = require("./module");
+myModule1.setName("zhuyujie");
+var myModule2 = require("./module");
+myModule2.setName("wushengheng");
+myModule1.sayHello();        //输出wushengheng
+实例2：
+var myModule1 = require("./module");
+myModule1.setName("zhuyujie");
+var myModule2 = require("./module");
+myModule2.setName("wushengheng");
+myModule2.sayHello();        //输出wushengheng
+实例3：
+var myModule1 = require("./module");
+myModule1.setName("zhuyujie");
+var myModule2 = require("./module");
+myModule2.setName("wushengheng");
+myModule3.sayHello();        //输出sayHello is not defined
+
+把一个对象封装到模块中，
+实例1：    //hello.js
+function Hello() { 
+	var name; 
+	this.setName = function(thyName) { 
+		name = thyName; 
+	}; 
+	this.sayHello = function() { 
+		console.log('Hello ' + name); 
+	}; 
+}; 
+exports.Hello = Hello;  //此时我们在其他文件中需要通过require("./hello").Hello来获取Hello对象;
+实例2：
+function Hello() { 
+	var name; 
+	this.setName = function(thyName) { 
+		name = thyName; 
+	}; 
+	this.sayHello = function() { 
+		console.log('Hello ' + name); 
+	}; 
+}; 
+module.exports = Hello;  //此时通过require("./hello")来获取Hello对象;
+
+创建包：包是在模块的基础上更深一层的抽象。Node.js根据CommonJS规范实现了包机制，开发了npm来解决包的发布和获取需求。
+严格符合CommonJS规范的包应该具备以下特征：
+1.package.json必须在包的顶层目录下。
+2.二进制文件应该在bin目录下。
+3.javaScript代码应该在lib目录下。
+4.文档应该在doc目录下。
+5.单元测试应该放在test目录下。
