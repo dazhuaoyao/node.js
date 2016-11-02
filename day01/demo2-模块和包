@@ -66,3 +66,15 @@ module.exports = Hello;  //此时通过require("./hello")来获取Hello对象;
 3.javaScript代码应该在lib目录下。
 4.文档应该在doc目录下。
 5.单元测试应该放在test目录下。
+
+package.json是CommonJS规定的用来描述包的文件，完全符合规定的package.json应该包含有以下字段：
+name:包的名称
+description:包的简要说明
+version:版本识别字符串
+keywords:关键字数组
+maintainers:维护者数组
+contributors:贡献者数组
+bugs:提交bug的地址
+licenses:许可证数组
+repositories:仓库托管地址数组
+dependencies:包的依赖
